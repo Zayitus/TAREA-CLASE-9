@@ -1,0 +1,65 @@
+from datetime import datetime
+
+class Tarea:
+    def __init__(self, nombre, descripcion, prioridad):
+        self.nombre = nombre
+        self.descripcion = descripcion
+        self.prioridad = prioridad
+
+    def __str__(self):
+        return f"Nombre: {self.nombre}, Descripción: {self.descripcion}, Prioridad: {self.prioridad}"
+    
+    def get_detalle(self):
+        return str(self)
+
+class TareaGeneral(Tarea):
+    def __init__(self, nombre, descripcion, prioridad):
+        super().__init__(nombre, descripcion, prioridad)
+
+class TareaConFecha(Tarea):
+    def __init__(self, nombre, descripcion, prioridad, fecha):
+        super().__init__(nombre, descripcion, prioridad)
+        self.fecha = fecha
+
+    def __str__(self):
+        return super().__str__() + f", Fecha: {self.fecha}"
+    
+    def get_detalle(self):
+        return str(self)
+
+class ListaDeTareas:
+    def __init__(self):
+        self.tareas = []
+
+    def agregar_tarea(self, tarea):
+        self.tareas.append(tarea)
+
+    def eliminar_tarea(self, nombre_tarea):
+        self.tareas = [tarea for tarea in self.tareas if tarea.nombre != nombre_tarea]
+
+    def listar_tareas(self):
+        for tarea in self.tareas:
+            print(tarea.get_detalle())
+
+# Ejemplo de uso del programa
+lista_de_tareas = ListaDeTareas()
+
+# Agregar algunas tareas
+tarea1 = TareaGeneral("Comprar leche", "Ir al supermercado a comprar leche", "Alta")
+tarea2 = TareaConFecha("Entregar reporte", "Entregar el reporte trimestral", "Media", datetime(2024, 6, 20))
+tarea3 = TareaGeneral("Llamar a Juan", "Llamar a Juan para discutir el proyecto", "Baja")
+
+lista_de_tareas.agregar_tarea(tarea1)
+lista_de_tareas.agregar_tarea(tarea2)
+lista_de_tareas.agregar_tarea(tarea3)
+
+# Listar todas las tareas
+print("Lista de tareas:")
+lista_de_tareas.listar_tareas()
+
+# Eliminar una tarea
+lista_de_tareas.eliminar_tarea("Llamar a Juan")
+
+# Listar todas las tareas después de eliminar una
+print("\nLista de tareas después de eliminar una:")
+lista_de_tareas.listar_tareas()
